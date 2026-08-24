@@ -1,24 +1,8 @@
 "use client"
 import { useEffect, useState, KeyboardEvent } from 'react'
+import Stepper from '../../components/Stepper'
 
-const STEPS = ['이력서 업로드', 'AI 분석', '프로필 편집', '공고 매칭']
 const CURRENT_STEP = 2 // 이 화면은 3단계 (업로드·분석은 완료된 상태)
-
-function Stepper() {
-  return (
-    <ol className="stepper">
-      {STEPS.map((label, idx) => (
-        <li key={label} className="stepper-item">
-          <span
-            className={`stepper-dot ${idx === CURRENT_STEP ? 'stepper-dot--current' : idx < CURRENT_STEP ? 'stepper-dot--done' : ''}`}
-          />
-          <span className={`stepper-label ${idx === CURRENT_STEP ? 'stepper-label--current' : ''}`}>{label}</span>
-          {idx < STEPS.length - 1 && <span className="stepper-line" />}
-        </li>
-      ))}
-    </ol>
-  )
-}
 
 function TagInput({
   label,
@@ -115,7 +99,7 @@ export default function ProfilePage() {
 
   return (
     <main className="upload-wrap">
-      <Stepper />
+      <Stepper current={CURRENT_STEP} />
 
       <div className="card upload-card">
         <div className="eyebrow">STEP 3 · 프로필 편집</div>

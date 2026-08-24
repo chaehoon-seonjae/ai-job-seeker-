@@ -1,5 +1,6 @@
 "use client"
 import { useCallback, useRef, useState } from 'react'
+import Stepper from './Stepper'
 
 type Status = 'idle' | 'dragging' | 'selected' | 'analyzing' | 'done' | 'error'
 
@@ -9,7 +10,6 @@ const ANALYZE_PHASES = [
   { label: '강점 요약 중', to: 92 },
 ]
 
-const STEPS = ['이력서 업로드', 'AI 분석', '프로필 편집', '공고 매칭']
 const CURRENT_STEP = 0 // 이 화면은 1단계
 
 function formatSize(bytes: number) {
@@ -107,17 +107,7 @@ export default function ResumeUpload() {
 
   return (
     <div className="upload-wrap">
-      <ol className="stepper">
-        {STEPS.map((label, idx) => (
-          <li key={label} className="stepper-item">
-            <span
-              className={`stepper-dot ${idx === CURRENT_STEP ? 'stepper-dot--current' : idx < CURRENT_STEP ? 'stepper-dot--done' : ''}`}
-            />
-            <span className={`stepper-label ${idx === CURRENT_STEP ? 'stepper-label--current' : ''}`}>{label}</span>
-            {idx < STEPS.length - 1 && <span className="stepper-line" />}
-          </li>
-        ))}
-      </ol>
+      <Stepper current={CURRENT_STEP} />
 
       <div className="card upload-card">
         <div className="eyebrow">STEP 1 · AI 커리어 분석</div>
