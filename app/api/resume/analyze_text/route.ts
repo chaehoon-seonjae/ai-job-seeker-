@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { analyzeResumeText } from '../../../../lib/openai'
+import { analyzeResumeText } from '../../../../lib/ai'
 
 export async function POST(req: Request) {
   try {

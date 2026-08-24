@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { analyzeJobAgainstProfile } from '../../../../lib/openai'
+import { analyzeJobAgainstProfile } from '../../../../lib/ai'
 
 export async function POST(req: Request){
   try{
