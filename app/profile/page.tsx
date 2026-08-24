@@ -43,6 +43,8 @@ function TagInput({
   }
 
   function onKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    // 한글 IME 조합 중 Enter가 두 번 처리돼 마지막 음절이 별도 태그로 남는 것 방지
+    if (e.nativeEvent.isComposing) return
     if (e.key === 'Enter' || e.key === ',') {
       e.preventDefault()
       commitDraft()
