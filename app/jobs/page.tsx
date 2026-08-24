@@ -110,7 +110,12 @@ export default function JobsPage(){
                 </div>
                 <div style={{textAlign:'right',flexShrink:0}}>
                   <span className="match-badge">매칭점수 {j.score ?? 'N/A'}</span>
-                  <div style={{marginTop:10}}>
+                  {j.url && j.url !== '#' && (
+                    <div style={{marginTop:10}}>
+                      <a className="btn btn--secondary" href={j.url} target="_blank" rel="noopener noreferrer">공고 확인하러 가기 ↗</a>
+                    </div>
+                  )}
+                  <div style={{marginTop:8}}>
                     <button className="btn btn--secondary" disabled={!!analyzingIds[j.id]} onClick={async ()=>{
                       try{
                         setAnalyzingIds(s=>({...s,[j.id]:true}))
@@ -125,11 +130,6 @@ export default function JobsPage(){
                       }finally{ setAnalyzingIds(s=>{ const ns={...s}; delete ns[j.id]; return ns }) }
                     }}>{analyzingIds[j.id] ? '이 공고와 내 경력을 비교하고 있어요...':'상세 분석'}</button>
                   </div>
-                  {j.url && j.url !== '#' && (
-                    <div style={{marginTop:8}}>
-                      <a className="btn btn--secondary" href={j.url} target="_blank" rel="noopener noreferrer">공고 확인하러 가기 ↗</a>
-                    </div>
-                  )}
                 </div>
               </div>
               {analysisMap[j.id] && (
