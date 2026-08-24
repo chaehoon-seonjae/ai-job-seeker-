@@ -10,7 +10,6 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "encoding": "^0.1.13",
-    "formidable": "2.1.2",
     "mammoth": "1.4.21",
     "next": "13.4.10",
     "openai": "4.11.0",
