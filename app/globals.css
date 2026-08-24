@@ -41,6 +41,7 @@ body {
   font-weight: 600;
   border: none;
   cursor: pointer;
+  text-decoration: none;
 }
 .muted {
   color: var(--muted);
@@ -63,13 +64,6 @@ body {
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 12px;
-}
-.job-card a {
-  color: var(--navy);
-  text-decoration: none;
-}
-.job-card a:hover {
-  text-decoration: underline;
 }
 .match-badge {
   display: inline-block;
@@ -95,7 +89,6 @@ body {
   background: none;
   font-size: 10px;
   font-weight: 700;
-  font-style: italic;
   line-height: 1;
   cursor: help;
   padding: 0;

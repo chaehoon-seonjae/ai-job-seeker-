@@ -105,11 +105,7 @@ export default function JobsPage(){
             <div key={j.id||i} className="job-card">
               <div style={{display:'flex',justifyContent:'space-between',gap:12}}>
                 <div>
-                  <strong>
-                    {j.url && j.url !== '#' ? (
-                      <a href={j.url} target="_blank" rel="noopener noreferrer">{j.title}</a>
-                    ) : j.title}
-                  </strong>
+                  <strong>{j.title}</strong>
                   <div className="muted">{j.company} · {j.location}</div>
                 </div>
                 <div style={{textAlign:'right',flexShrink:0}}>
@@ -129,6 +125,11 @@ export default function JobsPage(){
                       }finally{ setAnalyzingIds(s=>{ const ns={...s}; delete ns[j.id]; return ns }) }
                     }}>{analyzingIds[j.id] ? '이 공고와 내 경력을 비교하고 있어요...':'상세 분석'}</button>
                   </div>
+                  {j.url && j.url !== '#' && (
+                    <div style={{marginTop:8}}>
+                      <a className="btn btn--secondary" href={j.url} target="_blank" rel="noopener noreferrer">공고 확인하러 가기 ↗</a>
+                    </div>
+                  )}
                 </div>
               </div>
               {analysisMap[j.id] && (
