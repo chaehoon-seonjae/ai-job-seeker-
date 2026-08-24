@@ -135,19 +135,19 @@ export default function JobsPage(){
               {analysisMap[j.id] && (
                 <div style={{marginTop:16,borderTop:'1px solid var(--border)',paddingTop:16}}>
                   <h4>왜 이 공고가 잘 맞나요?</h4>
-                  <ul>
+                  <ul className="analysis-list">
                     {(analysisMap[j.id].matchedStrengths||[]).map((s:string,i:number)=>(<li key={i}>✓ {s}</li>))}
                   </ul>
                   <h4>확인할 부분</h4>
-                  <ul>
+                  <ul className="analysis-list">
                     {(analysisMap[j.id].gaps||[]).map((s:string,i:number)=>(<li key={i}>△ {s}</li>))}
                   </ul>
                   <h4>지원할 때 강조하세요</h4>
-                  <ol>
-                    {(analysisMap[j.id].resumeHighlights||[]).map((s:string,i:number)=>(<li key={i}>{s}</li>))}
+                  <ol className="analysis-list">
+                    {(analysisMap[j.id].resumeHighlights||[]).map((s:string,i:number)=>(<li key={i}>{i+1}. {s}</li>))}
                   </ol>
                   <h4>지원 전 준비하면 좋은 것</h4>
-                  <ul>
+                  <ul className="analysis-list">
                     {(analysisMap[j.id].preparationPoints||[]).map((s:string,i:number)=>(<li key={i}>• {s}</li>))}
                   </ul>
                   <div style={{marginTop:8}}>
