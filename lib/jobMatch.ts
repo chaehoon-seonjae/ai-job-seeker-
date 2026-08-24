@@ -20,7 +20,11 @@ export function runKSkillMatch(opts:{resumeText:string, keyword?:string, locatio
     args.push('--location', (opts as any).location)
   }
   if(typeof opts.careerYears === 'number') args.push('--career-years', String(opts.careerYears))
-  if(typeof opts.limit === 'number') args.push('--limit', String(opts.limit))
+  if(typeof opts.limit === 'number'){
+    args.push('--limit', String(opts.limit))
+    // 소스별 수집량 기본값(10)에 묶이지 않도록 limit에 맞춰 함께 전달
+    args.push('--per-source', String(opts.limit))
+  }
   if(opts.source) args.push('--source', opts.source)
   if(Array.isArray(opts.negatives)){
     for(const n of opts.negatives){ args.push('--negative', n) }

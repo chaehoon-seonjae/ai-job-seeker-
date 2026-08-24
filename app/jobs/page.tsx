@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const STEPS = ['이력서 업로드', 'AI 분석', '프로필 편집', '공고 매칭']
 const CURRENT_STEP = 3 // 이 화면은 4단계 (업로드·분석·프로필 편집은 완료된 상태)
@@ -21,14 +21,23 @@ function Stepper() {
 }
 
 export default function JobsPage(){
-  const [keyword,setKeyword]=useState('Backend Developer')
-  const [location,setLocation]=useState('서울')
-  const [negative,setNegative]=useState('파견직,계약직')
+  const [keyword,setKeyword]=useState('')
+  const [location,setLocation]=useState('')
+  const [negative,setNegative]=useState('')
   const [limit,setLimit]=useState(10)
   const [loading,setLoading]=useState(false)
   const [jobs,setJobs]=useState<any[]|null>(null)
   const [analysisMap,setAnalysisMap] = useState<Record<string, any>>({})
   const [analyzingIds,setAnalyzingIds] = useState<Record<string,boolean>>({})
+  const [collapsedIds,setCollapsedIds] = useState<Record<string,boolean>>({})
+  const [primaryRole,setPrimaryRole] = useState('')
+
+  useEffect(()=>{
+    try{
+      const raw = window.localStorage.getItem('careerProfile')
+      if(raw) setPrimaryRole(JSON.parse(raw).primaryRole || '')
+    }catch(e){}
+  },[])
 
   async function onSearch(e:React.FormEvent){
     e.preventDefault()
@@ -62,16 +71,24 @@ export default function JobsPage(){
         <form onSubmit={onSearch}>
           <div className="field">
             <label className="field-label" htmlFor="keyword">희망 직무</label>
-            <input id="keyword" className="text-input" value={keyword} onChange={e=>setKeyword(e.target.value)} />
+            <input id="keyword" className="text-input" required placeholder={primaryRole ? `예: ${primaryRole}` : '예: Backend Developer'} value={keyword} onChange={e=>setKeyword(e.target.value)} />
           </div>
           <div className="field">
             <label className="field-label" htmlFor="location">희망 지역</label>
-            <input id="location" className="text-input" value={location} onChange={e=>setLocation(e.target.value)} />
+            <input id="location" className="text-input" placeholder="예: 서울" value={location} onChange={e=>setLocation(e.target.value)} />
           </div>
           <div className="field">
             <label className="field-label" htmlFor="negative">제외 조건</label>
             <p className="field-helper">콤마(,)로 구분해서 입력하세요</p>
-            <input id="negative" className="text-input" value={negative} onChange={e=>setNegative(e.target.value)} />
+            <input id="negative" className="text-input" placeholder="예: 파견직, 계약직" value={negative} onChange={e=>setNegative(e.target.value)} />
+          </div>
+          <div className="field">
+            <label className="field-label" htmlFor="limit">공고 개수</label>
+            <select id="limit" className="text-input" value={limit} onChange={e=>setLimit(Number(e.target.value))}>
+              <option value={10}>10개</option>
+              <option value={20}>20개</option>
+              <option value={30}>30개</option>
+            </select>
           </div>
           <button className="btn btn--primary btn--full" type="submit" disabled={loading}>
             {loading? '나에게 맞는 채용공고를 찾고 있어요...':'공고 찾아보기'}
@@ -115,6 +132,7 @@ export default function JobsPage(){
                       <a className="btn btn--secondary" href={j.url} target="_blank" rel="noopener noreferrer">공고 확인하러 가기 ↗</a>
                     </div>
                   )}
+                  {!analysisMap[j.id] && (
                   <div style={{marginTop:8}}>
                     <button className="btn btn--secondary" disabled={!!analyzingIds[j.id]} onClick={async ()=>{
                       try{
@@ -130,10 +148,17 @@ export default function JobsPage(){
                       }finally{ setAnalyzingIds(s=>{ const ns={...s}; delete ns[j.id]; return ns }) }
                     }}>{analyzingIds[j.id] ? '이 공고와 내 경력을 비교하고 있어요...':'상세 분석'}</button>
                   </div>
+                  )}
                 </div>
               </div>
               {analysisMap[j.id] && (
-                <div style={{marginTop:16,borderTop:'1px solid var(--border)',paddingTop:16}}>
+                <div style={{marginTop:16,borderTop:'1px solid var(--border)',paddingTop:8}}>
+                  <div style={{display:'flex',justifyContent:'flex-end'}}>
+                    <button type="button" className="link-btn" onClick={()=>setCollapsedIds(s=>({...s,[j.id]:!s[j.id]}))}>
+                      {collapsedIds[j.id] ? '상세 분석 펼치기 ▾' : '상세 분석 접기 ▴'}
+                    </button>
+                  </div>
+                  {!collapsedIds[j.id] && (<div>
                   <h4>왜 이 공고가 잘 맞나요?</h4>
                   <ul className="analysis-list">
                     {(analysisMap[j.id].matchedStrengths||[]).map((s:string,i:number)=>(<li key={i}>✓ {s}</li>))}
@@ -154,6 +179,7 @@ export default function JobsPage(){
                     <strong>추천: </strong>
                     {analysisMap[j.id].recommendation === 'STRONG_APPLY' ? '🟢 적극 지원' : analysisMap[j.id].recommendation === 'REVIEW_AND_APPLY' ? '🟡 조건 확인 후 지원' : '⚪ 우선순위 낮음'}
                   </div>
+                  </div>)}
                 </div>
               )}
             </div>
