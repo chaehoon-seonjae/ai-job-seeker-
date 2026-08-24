@@ -57,7 +57,11 @@ export default function JobsPage(){
             <div key={j.id||i} className="job-card">
               <div style={{display:'flex',justifyContent:'space-between'}}>
                 <div>
-                  <strong>{j.title}</strong>
+                  <strong>
+                    {j.url && j.url !== '#' ? (
+                      <a href={j.url} target="_blank" rel="noopener noreferrer">{j.title}</a>
+                    ) : j.title}
+                  </strong>
                   <div className="muted">{j.company} · {j.location}</div>
                 </div>
                 <div style={{textAlign:'right'}}>
