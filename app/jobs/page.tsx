@@ -91,7 +91,22 @@ export default function JobsPage(){
                   <div className="muted">{j.company} · {j.location}</div>
                 </div>
                 <div style={{textAlign:'right',flexShrink:0}}>
-                  <span className="match-badge">Match {j.score ?? 'N/A'}</span>
+                  <div className="score-info">
+                    <span className="match-badge">매칭점수 {j.score ?? 'N/A'}</span>
+                    <button type="button" className="info-btn" aria-label="매칭점수 계산 방식 보기">i</button>
+                    <div className="tooltip-panel" role="tooltip">
+                      <p className="tooltip-title">매칭점수 계산 방식 (0~100)</p>
+                      <div className="tooltip-row"><span>기본 점수</span><b>35</b></div>
+                      <div className="tooltip-row"><span>직무 키워드 일치</span><b>+12/개 · 최대 25</b></div>
+                      <div className="tooltip-row"><span>도구·스킬 일치</span><b>+5/개 · 최대 20</b></div>
+                      <div className="tooltip-row"><span>산업 키워드 일치</span><b>+5/개 · 최대 10</b></div>
+                      <div className="tooltip-row"><span>희망 지역 일치</span><b>+10</b></div>
+                      <div className="tooltip-row"><span>경력 조건 명시 공고</span><b>+5</b></div>
+                      <div className="tooltip-row"><span>신입 공고 (경력 3년↑)</span><b>−15</b></div>
+                      <div className="tooltip-row"><span>제외 조건 감지</span><b>−30</b></div>
+                      <p className="tooltip-note">공고 요약 텍스트와 키워드를 비교한 규칙 기반 점수예요</p>
+                    </div>
+                  </div>
                   <div style={{marginTop:10}}>
                     <button className="btn btn--secondary" disabled={!!analyzingIds[j.id]} onClick={async ()=>{
                       try{
