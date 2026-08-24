@@ -2,7 +2,7 @@
 import { useEffect, useState, KeyboardEvent } from 'react'
 import Stepper from '../../components/Stepper'
 
-const CURRENT_STEP = 2 // 이 화면은 3단계 (업로드·분석은 완료된 상태)
+const CURRENT_STEP = 1 // 이 화면은 2단계 (업로드는 완료된 상태)
 
 function TagInput({
   label,
@@ -102,7 +102,7 @@ export default function ProfilePage() {
       <Stepper current={CURRENT_STEP} />
 
       <div className="card upload-card">
-        <div className="eyebrow">STEP 3 · 프로필 편집</div>
+        <div className="eyebrow">STEP 2 · 프로필 편집</div>
         <h1 className="title">AI가 정리한 내 경력이에요</h1>
         <p className="subtitle">
           {loaded && profile.primaryRole

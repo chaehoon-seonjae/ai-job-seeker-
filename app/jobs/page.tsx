@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Stepper from '../../components/Stepper'
 
-const CURRENT_STEP = 3 // 이 화면은 4단계 (업로드·분석·프로필 편집은 완료된 상태)
+const CURRENT_STEP = 2 // 이 화면은 3단계 (업로드·프로필 편집은 완료된 상태)
 
 export default function JobsPage(){
   const [keyword,setKeyword]=useState('')
@@ -48,7 +48,7 @@ export default function JobsPage(){
       <Stepper current={CURRENT_STEP} />
 
       <div className="card upload-card">
-        <div className="eyebrow">STEP 4 · 공고 매칭</div>
+        <div className="eyebrow">STEP 3 · 공고 매칭</div>
         <h1 className="title">희망 조건을 알려주세요</h1>
         <p className="subtitle">프로필과 희망 조건을 바탕으로 잘 맞는 공고를 찾아드려요.</p>
 

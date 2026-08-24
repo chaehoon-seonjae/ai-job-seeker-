@@ -1,9 +1,8 @@
 "use client"
 import { useState } from 'react'
 
-const STEPS = ['이력서 업로드', 'AI 분석', '프로필 편집', '공고 매칭']
-// 클릭 시 이동할 수 있는 단계만 정의 (AI 분석은 별도 화면이 없음)
-const STEP_LINKS: Record<number, string> = { 0: '/', 2: '/profile', 3: '/jobs' }
+const STEPS = ['이력서 업로드', '프로필 편집', '공고 매칭']
+const STEP_LINKS: Record<number, string> = { 0: '/', 1: '/profile', 2: '/jobs' }
 
 export default function Stepper({ current }: { current: number }) {
   const [confirmOpen, setConfirmOpen] = useState(false)
