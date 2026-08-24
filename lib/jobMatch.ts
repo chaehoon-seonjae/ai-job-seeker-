@@ -38,9 +38,10 @@ export function runKSkillMatch(opts:{resumeText:string, keyword?:string, locatio
     // build a single cmd.exe /c command string to avoid spawn issues with .cmd path
     const quoted = args.map(a=>`"${String(a).replace(/"/g,'\\"')}"`).join(' ')
     const cmd = `"${npxPath}" ${quoted}`
-    res = spawnSync(cmd, { shell: true, encoding: 'utf-8', maxBuffer: 20 * 1024 * 1024, env: { ...process.env, PATH: prependPath + (process.env.PATH || '') } })
+    // PYTHONUTF8: 한국어 Windows에서 파이썬 stdout이 CP949로 나와 공고명이 깨지는 것 방지
+    res = spawnSync(cmd, { shell: true, encoding: 'utf-8', maxBuffer: 20 * 1024 * 1024, env: { ...process.env, PYTHONUTF8: '1', PATH: prependPath + (process.env.PATH || '') } })
   } else {
-    res = spawnSync(process.env.NPX_PATH || 'npx', args, { encoding: 'utf-8', maxBuffer: 20 * 1024 * 1024, env: { ...process.env } })
+    res = spawnSync(process.env.NPX_PATH || 'npx', args, { encoding: 'utf-8', maxBuffer: 20 * 1024 * 1024, env: { ...process.env, PYTHONUTF8: '1' } })
   }
   if(res.error) throw res.error
   if(res.status !== 0){
