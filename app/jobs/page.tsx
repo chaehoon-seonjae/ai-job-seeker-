@@ -123,7 +123,9 @@ export default function JobsPage(){
               <div style={{display:'flex',justifyContent:'space-between',gap:12}}>
                 <div>
                   <strong>{j.title}</strong>
-                  <div className="muted">{j.company} · {j.location}</div>
+                  {(j.company || j.location) && (
+                    <div className="muted">{[j.company, j.location].filter(Boolean).join(' · ')}</div>
+                  )}
                 </div>
                 <div style={{textAlign:'right',flexShrink:0}}>
                   <span className="match-badge">매칭점수 {j.score ?? 'N/A'}</span>
