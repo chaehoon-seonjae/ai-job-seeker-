@@ -1,7 +1,7 @@
 "use client"
 import { useState } from 'react'
 
-const STEPS = ['이력서 업로드', 'AI 분석', '프로필 편집', '공고 매칭', '지원 포인트']
+const STEPS = ['이력서 업로드', 'AI 분석', '프로필 편집', '공고 매칭']
 const CURRENT_STEP = 3 // 이 화면은 4단계 (업로드·분석·프로필 편집은 완료된 상태)
 
 function Stepper() {

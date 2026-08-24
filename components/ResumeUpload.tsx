@@ -9,7 +9,7 @@ const ANALYZE_PHASES = [
   { label: '강점 요약 중', to: 92 },
 ]
 
-const STEPS = ['이력서 업로드', 'AI 분석', '프로필 편집', '공고 매칭', '지원 포인트']
+const STEPS = ['이력서 업로드', 'AI 분석', '프로필 편집', '공고 매칭']
 const CURRENT_STEP = 0 // 이 화면은 1단계
 
 function formatSize(bytes: number) {
