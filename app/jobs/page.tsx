@@ -34,10 +34,12 @@ export default function JobsPage(){
     e.preventDefault()
     setLoading(true)
     try{
+      const profileRaw = window.localStorage.getItem('careerProfile')
+      const profile = profileRaw ? JSON.parse(profileRaw) : {}
       const res = await fetch('/api/jobs/match',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({ keyword, location, negative: negative.split(',').map(s=>s.trim()).filter(Boolean), limit })
+        body:JSON.stringify({ profile, keyword, location, negative: negative.split(',').map(s=>s.trim()).filter(Boolean), limit })
       })
       if(!res.ok) throw new Error('검색 실패')
       const data = await res.json()
