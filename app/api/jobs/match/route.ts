@@ -17,18 +17,10 @@ export async function POST(req: Request){
       const raw = runKSkillMatch({ resumeText, keyword, location, negatives, limit })
       // normalize results: assume raw.jobs or raw.results
       const items = raw.postings || raw.jobs || raw.results || []
-      const jobs = items.map((it:any, idx:number)=>{
-        const title = it.title || it.job_title || 'Unknown'
-        let company = it.company || it.org || ''
-        if(!company){
-          // 회사명이 없으면 공고명 앞의 [회사명] 패턴에서 추출
-          const m = title.match(/^\[([^\]]+)\]/)
-          if(m) company = m[1].trim()
-        }
-        return {
+      const jobs = items.map((it:any, idx:number)=>({
         id: it.id || it.posting_id || String(idx),
-        title,
-        company,
+        title: it.title || it.job_title || 'Unknown',
+        company: it.company || it.org || '',
         score: it.score ?? it.match_score ?? null,
         location: it.location || it.addr || it.region || '',
         experience: it.career || it.experience || '',
@@ -37,7 +29,7 @@ export async function POST(req: Request){
         cautions: it.cautions || [],
         highlights: it.matched_terms || [],
         raw: it
-      }})
+      }))
       jobs.sort((a:any,b:any)=> (b.score||0) - (a.score||0))
       return NextResponse.json({ jobs })
     }catch(e:any){
