@@ -1,0 +1,26 @@
+{
+  "name": "ai-job-seeker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "encoding": "^0.1.13",
+    "formidable": "2.1.2",
+    "mammoth": "1.4.21",
+    "next": "13.4.10",
+    "openai": "4.11.0",
+    "pdf-parse": "1.1.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.3.1",
+    "@types/react": "18.2.21",
+    "typescript": "5.1.6"
+  }
+}

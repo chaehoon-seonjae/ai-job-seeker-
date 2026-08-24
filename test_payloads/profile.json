@@ -1,0 +1,10 @@
+{
+  "primaryRole": "Backend Developer",
+  "experienceYears": 5,
+  "skills": ["Java", "Spring Boot", "AWS", "MySQL"],
+  "industries": ["Fintech", "E-commerce"],
+  "tools": ["Git", "Docker"],
+  "projectExperience": ["대규모 트래픽 서비스 개발", "결제 API 개발"],
+  "strengths": ["Backend API 설계", "Cloud 환경 운영"],
+  "keywords": ["Backend Developer", "Java", "Spring", "AWS"]
+}

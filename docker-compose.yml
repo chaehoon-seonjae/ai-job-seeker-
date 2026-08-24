@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - JOBMATCH_PREPEND_PATH=${JOBMATCH_PREPEND_PATH}
+      - NPX_PATH=${NPX_PATH}
+    volumes:
+      - ./:/usr/src/app:cached
+    command: [ "node", "node_modules/next/dist/bin/next", "dev" ]

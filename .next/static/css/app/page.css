@@ -1,0 +1,14 @@
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[5].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[5].oneOf[12].use[3]!./app/globals.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+:root{font-family:Inter,system-ui,Arial,Helvetica,sans-serif}
+body{margin:0;padding:20px;background:#f7f7fb;color:#111}
+.container{max-width:760px;margin:0 auto}
+h1{font-size:24px}
+.notice{margin-top:24px;font-size:12px;color:#666}
+.card{background:#fff;padding:16px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.05);}
+.btn{background:#0066ff;color:#fff;padding:8px 12px;border-radius:6px;border:0}
+.muted{color:#666}
+.flex{display:flex;gap:12px;align-items:center}
+.job-card{border:1px solid #eee;padding:12px;border-radius:8px;margin-bottom:12px;background:#fff}
+

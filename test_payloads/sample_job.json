@@ -1,0 +1,12 @@
+{
+  "id": "sample-1",
+  "title": "Backend Developer (Java)",
+  "company": "회사 예시",
+  "location": "서울",
+  "url": "https://example.com/job/1",
+  "score": 85,
+  "reasons": ["Java 경험 일치", "AWS 경험"],
+  "cautions": ["Kubernetes 경험 확인 필요"],
+  "matched_terms": ["Java","Spring","AWS"],
+  "raw": {}
+}
