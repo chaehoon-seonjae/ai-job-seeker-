@@ -108,7 +108,7 @@ export default function ProfilePage() {
   }
 
   function goBack() {
-    window.location.href = '/resume'
+    window.location.href = '/'
   }
 
   return (

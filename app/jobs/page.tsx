@@ -1,6 +1,25 @@
 "use client"
 import { useState } from 'react'
 
+const STEPS = ['이력서 업로드', 'AI 분석', '프로필 편집', '공고 매칭', '지원 포인트']
+const CURRENT_STEP = 3 // 이 화면은 4단계 (업로드·분석·프로필 편집은 완료된 상태)
+
+function Stepper() {
+  return (
+    <ol className="stepper">
+      {STEPS.map((label, idx) => (
+        <li key={label} className="stepper-item">
+          <span
+            className={`stepper-dot ${idx === CURRENT_STEP ? 'stepper-dot--current' : idx < CURRENT_STEP ? 'stepper-dot--done' : ''}`}
+          />
+          <span className={`stepper-label ${idx === CURRENT_STEP ? 'stepper-label--current' : ''}`}>{label}</span>
+          {idx < STEPS.length - 1 && <span className="stepper-line" />}
+        </li>
+      ))}
+    </ol>
+  )
+}
+
 export default function JobsPage(){
   const [keyword,setKeyword]=useState('Backend Developer')
   const [location,setLocation]=useState('서울')
@@ -30,32 +49,39 @@ export default function JobsPage(){
   }
 
   return (
-    <main>
-      <h2>희망 조건</h2>
-      <form onSubmit={onSearch} className="card">
-        <div style={{marginBottom:8}}>
-          <label>희망 직무</label>
-          <input value={keyword} onChange={e=>setKeyword(e.target.value)} style={{width:'100%'}} />
-        </div>
-        <div style={{marginBottom:8}}>
-          <label>희망 지역</label>
-          <input value={location} onChange={e=>setLocation(e.target.value)} />
-        </div>
-        <div style={{marginBottom:8}}>
-          <label>제외 조건 (콤마로 구분)</label>
-          <input value={negative} onChange={e=>setNegative(e.target.value)} />
-        </div>
-        <div className="flex">
-          <button className="btn" type="submit" disabled={loading}>{loading? '나에게 맞는 채용공고를 찾고 있어요...':'공고 찾아보기'}</button>
-        </div>
-      </form>
+    <main className="upload-wrap">
+      <Stepper />
 
-      <section style={{marginTop:16}}>
-        <h3>추천 공고</h3>
+      <div className="card upload-card">
+        <div className="eyebrow">STEP 4 · 공고 매칭</div>
+        <h1 className="title">희망 조건을 알려주세요</h1>
+        <p className="subtitle">프로필과 희망 조건을 바탕으로 잘 맞는 공고를 찾아드려요.</p>
+
+        <form onSubmit={onSearch}>
+          <div className="field">
+            <label className="field-label" htmlFor="keyword">희망 직무</label>
+            <input id="keyword" className="text-input" value={keyword} onChange={e=>setKeyword(e.target.value)} />
+          </div>
+          <div className="field">
+            <label className="field-label" htmlFor="location">희망 지역</label>
+            <input id="location" className="text-input" value={location} onChange={e=>setLocation(e.target.value)} />
+          </div>
+          <div className="field">
+            <label className="field-label" htmlFor="negative">제외 조건</label>
+            <p className="field-helper">콤마(,)로 구분해서 입력하세요</p>
+            <input id="negative" className="text-input" value={negative} onChange={e=>setNegative(e.target.value)} />
+          </div>
+          <button className="btn btn--primary btn--full" type="submit" disabled={loading}>
+            {loading? '나에게 맞는 채용공고를 찾고 있어요...':'공고 찾아보기'}
+          </button>
+        </form>
+      </div>
+
+      <section style={{marginTop:24}}>
         {jobs ? (
           jobs.map((j,i)=> (
             <div key={j.id||i} className="job-card">
-              <div style={{display:'flex',justifyContent:'space-between'}}>
+              <div style={{display:'flex',justifyContent:'space-between',gap:12}}>
                 <div>
                   <strong>
                     {j.url && j.url !== '#' ? (
@@ -64,10 +90,10 @@ export default function JobsPage(){
                   </strong>
                   <div className="muted">{j.company} · {j.location}</div>
                 </div>
-                <div style={{textAlign:'right'}}>
-                  <div>Match {j.score ?? 'N/A'}</div>
-                  <div style={{marginTop:8}}>
-                    <button className="btn" disabled={!!analyzingIds[j.id]} onClick={async ()=>{
+                <div style={{textAlign:'right',flexShrink:0}}>
+                  <span className="match-badge">Match {j.score ?? 'N/A'}</span>
+                  <div style={{marginTop:10}}>
+                    <button className="btn btn--secondary" disabled={!!analyzingIds[j.id]} onClick={async ()=>{
                       try{
                         setAnalyzingIds(s=>({...s,[j.id]:true}))
                         const profileRaw = window.localStorage.getItem('careerProfile')
@@ -84,7 +110,7 @@ export default function JobsPage(){
                 </div>
               </div>
               {analysisMap[j.id] && (
-                <div style={{marginTop:12,borderTop:'1px solid #eee',paddingTop:12}}>
+                <div style={{marginTop:16,borderTop:'1px solid var(--border)',paddingTop:16}}>
                   <h4>왜 이 공고가 잘 맞나요?</h4>
                   <ul>
                     {(analysisMap[j.id].matchedStrengths||[]).map((s:string,i:number)=>(<li key={i}>✓ {s}</li>))}
@@ -110,7 +136,7 @@ export default function JobsPage(){
             </div>
           ))
         ) : (
-          <p className="muted">검색 전입니다.</p>
+          <p className="muted" style={{textAlign:'center'}}>검색 전입니다.</p>
         )}
       </section>
     </main>
